@@ -1,0 +1,40 @@
+Chào [Tên thành viên],
+
+Hy vọng bạn đang có một ngày thật tốt lành!
+
+Lưu ý: Đây là nội dung ví dụ nhằm kiểm tra hệ thống gửi email tự động của Câu lạc bộ Tiếng Anh. Vì email này được gửi tự động, nên có khả năng bị đưa vào mục thư rác (spam). Nếu bạn đang đọc được email này, vui lòng đánh dấu email là "Không phải thư rác" để đảm bảo bạn không bỏ lỡ các thông báo quan trọng từ câu lạc bộ trong tương lai. Xin chân thành cảm ơn!
+
+Dưới đây là ví dụ về một thông báo vi phạm nội quy, dùng để kiểm tra định dạng và cách hiển thị email:
+
+Thông báo vi phạm nội quy
+Ban Quản lý vừa kiểm tra lại danh sách điểm danh và nhận thấy bạn có một vi phạm nhỏ trong quá trình tham gia sinh hoạt. Cụ thể:
+
+Lỗi vi phạm: [Ví dụ: Đi họp muộn, nghỉ không phép, chưa đóng quỹ…]
+
+Số lần vi phạm: [Số lần]
+
+Mức phạt (nếu có): [Số tiền] VNĐ
+
+Hạn chót xử lý: Trước ngày [ngày/tháng/năm]
+
+Cách thức nộp phạt:
+Bạn vui lòng chuyển khoản số tiền trên đến tài khoản sau:
+
+Ngân hàng: MB Bank
+
+Số tài khoản: 0822438304
+
+Chủ tài khoản: Hoàng Minh Quân
+
+Nội dung chuyển khoản: [Họ tên] – Nộp phạt CLB Tiếng Anh
+
+Sau khi chuyển khoản, vui lòng gửi ảnh chụp giao dịch đến email này hoặc nhắn tin cho Ban Quản lý để được cập nhật thông tin.
+
+Chúng mình hiểu rằng đôi khi các bạn có thể bận rộn, nhưng rất mong bạn sẽ dành sự quan tâm hơn để cùng nhau duy trì môi trường sinh hoạt tích cực, kỷ luật và gắn kết trong câu lạc bộ.
+
+Nếu bạn có bất kỳ thắc mắc hay cần hỗ trợ, đừng ngần ngại phản hồi email này hoặc liên hệ với Ban Quản lý nhé!
+
+Cảm ơn bạn rất nhiều!
+Ban Quản lý Câu lạc bộ Tiếng Anh
+Email: esl.hr.cmc@gmail.com
+
