@@ -105,16 +105,84 @@ def initialize_app():
     """Initialize the Streamlit app with custom header and styling"""
     st.markdown("""
         <style>
+        /* Container styles */
         .block-container {
-            padding-top: 1rem;
-            padding-bottom: 0rem;
+            padding: 2rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+        
+        /* Main content area */
         .main > div {
-            padding-left: 2rem;
-            padding-right: 2rem;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
-        h1 {
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2C3E50;
+        }
+        
+        /* Buttons */
+        .stButton > button {
+            background-color: #2E86C1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stButton > button:hover {
+            background-color: #1A5276;
+            transform: translateY(-2px);
+        }
+        
+        /* Sidebar */
+        .css-1d391kg, .css-12oz5g7 {
+            background-color: #F8F9F9;
+            padding: 2rem 1rem;
+        }
+        
+        /* Tables */
+        .dataframe {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .dataframe th {
+            background-color: #2E86C1;
+            color: white;
+            padding: 0.5rem;
+        }
+        
+        .dataframe td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+
+        
+        /* Tabs */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            padding: 1rem 2rem;
+            color: #2C3E50;
+        }
+        
+        .stTabs [aria-selected="true"] {
+            background-color: #2E86C1 !important;
+            color: white !important;
+            border-radius: 5px 5px 0 0;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -144,6 +212,8 @@ def initialize_app():
     
     # Add a separator
     st.markdown("<hr>", unsafe_allow_html=True)
+    
+
 
 def setup_sidebar():
     st.sidebar.header("Cấu hình Đầu vào")
@@ -281,7 +351,7 @@ def main():
         st.subheader("Gửi Email Thông báo")
         
         # Add tabs for sending and viewing history
-        tab1, tab2 = st.tabs(["Gửi Email", "Lịch sử"])
+        tab1, tab2, tab3 = st.tabs(["Gửi Email Tự động", "Gửi Email Thủ công", "Lịch sử"])
         
         with tab1:
             if 'emails_can_gui' in st.session_state and st.session_state.emails_can_gui:
@@ -323,8 +393,149 @@ def main():
                     else:
                         st.warning("Một số email không gửi được. Vui lòng kiểm tra log lỗi.")
         
-        # Add history tab
+        # Add manual email tab
         with tab2:
+            st.subheader("Gửi Email Thủ công")
+            
+            # Upload custom email template
+            custom_template_file = st.file_uploader("Tải lên mẫu email tùy chỉnh", type=['txt'], key="custom_template")
+            if custom_template_file:
+                try:
+                    template_content = custom_template_file.getvalue().decode('utf-8')
+                    st.text_area("Xem trước mẫu email", value=template_content, height=200)
+                except Exception as e:
+                    st.error(f"Không thể đọc file mẫu email: {str(e)}")
+                    template_content = None
+            else:
+                try:
+                    with open(file_paths["mẫu Email"], "r", encoding="utf-8") as f:
+                        template_content = f.read()
+                    st.text_area("Mẫu Email mặc định", value=template_content, height=200, disabled=True)
+                except Exception as e:
+                    st.error(f"Không thể đọc file mẫu email mặc định: {str(e)}")
+                    template_content = None
+            
+            # Upload custom CSV file
+            custom_csv_file = st.file_uploader("Tải lên file thông tin người nhận (CSV)", type=['csv'], key="custom_csv")
+            if custom_csv_file:
+                try:
+                    recipients_df = pd.read_csv(custom_csv_file)
+                    # Kiểm tra xem file CSV có chứa cột 'email' và 'ten' không
+                    if 'email' not in recipients_df.columns:
+                        st.error("Lỗi: File CSV phải chứa cột 'email'. Đây là trường bắt buộc.")
+                        recipients_df = None
+                    elif 'ten' not in recipients_df.columns:
+                        st.warning("Cảnh báo: File CSV không chứa cột 'ten'. Hệ thống sẽ sử dụng email làm tên.")
+                        # Thêm cột 'ten' với giá trị mặc định là email
+                        recipients_df['ten'] = recipients_df['email']
+                    else:
+                        st.write("Danh sách người nhận từ file tùy chỉnh:")
+                        st.dataframe(recipients_df)
+                except Exception as e:
+                    st.error(f"Lỗi khi đọc file CSV: {str(e)}")
+                    recipients_df = None
+            else:
+                try:
+                    recipients_df = pd.read_csv(file_paths["CSV emails"])
+                    # Kiểm tra xem file CSV mặc định có chứa cột 'email' và 'ten' không
+                    if 'email' not in recipients_df.columns:
+                        st.error("Lỗi: File CSV mặc định phải chứa cột 'email'. Đây là trường bắt buộc.")
+                        recipients_df = None
+                    elif 'ten' not in recipients_df.columns:
+                        st.warning("Cảnh báo: File CSV mặc định không chứa cột 'ten'. Hệ thống sẽ sử dụng email làm tên.")
+                        # Thêm cột 'ten' với giá trị mặc định là email
+                        recipients_df['ten'] = recipients_df['email']
+                    else:
+                        st.write("Danh sách người nhận mặc định:")
+                        st.dataframe(recipients_df)
+                except Exception as e:
+                    st.error(f"Lỗi khi đọc danh sách người nhận mặc định: {str(e)}")
+                    recipients_df = None
+
+            if recipients_df is not None:
+                try:
+                    # Extract placeholders from template
+                    if template_content:
+                        import re
+                        placeholders = re.findall(r'\[(.*?)\]', template_content)
+                        st.write("Các placeholder trong mẫu email:", ", ".join([f"[{p}]" for p in placeholders]))
+                        
+                        # Verify CSV columns match placeholders
+                        missing_columns = [p for p in placeholders if p.lower() not in [col.lower() for col in recipients_df.columns]]
+                        if missing_columns:
+                            st.warning(f"Các cột còn thiếu trong file CSV: {', '.join(missing_columns)}")
+                        
+                        # Hiển thị thông báo về yêu cầu bắt buộc của trường email
+                        st.info("Lưu ý: Trường 'email' là bắt buộc trong file CSV. Hệ thống sẽ dựa vào tên và email tương ứng của mỗi người để gửi email cá nhân hóa.")
+                        
+                        # Select recipients
+                        if 'email' in recipients_df.columns:
+                            selected_recipients = st.multiselect(
+                                "Chọn người nhận email:",
+                                options=recipients_df.index.tolist(),
+                                format_func=lambda x: f"{recipients_df.loc[x, 'ten']} ({recipients_df.loc[x, 'email']})")
+                            
+                            if selected_recipients and template_content:
+                                if st.button("✉️ Gửi Email", key="send_manual_email"):
+                                    emails_to_send = {}
+                                    for idx in selected_recipients:
+                                        # Lấy email và tên của người nhận
+                                        recipient_email = recipients_df.loc[idx, 'email']
+                                        recipient_name = recipients_df.loc[idx, 'ten']
+                                        
+                                        # Kiểm tra tính hợp lệ của email
+                                        if not isinstance(recipient_email, str) or '@' not in recipient_email:
+                                            st.error(f"Email không hợp lệ: {recipient_email} cho {recipient_name}. Bỏ qua.")
+                                            continue
+                                            
+                                        # Create personalized content
+                                        personalized_content = template_content
+                                        
+                                        # Đảm bảo thay thế [Tên thành viên] bằng tên người nhận nếu có trong template
+                                        if "[Tên thành viên]" in personalized_content:
+                                            personalized_content = personalized_content.replace("[Tên thành viên]", recipient_name)
+                                        
+                                        # Thay thế các placeholder khác
+                                        for placeholder in placeholders:
+                                            if placeholder != "Tên thành viên" and placeholder.lower() in [col.lower() for col in recipients_df.columns]:
+                                                col = next(col for col in recipients_df.columns if col.lower() == placeholder.lower())
+                                                personalized_content = personalized_content.replace(f"[{placeholder}]", str(recipients_df.loc[idx, col]))
+                                        
+                                        emails_to_send[recipient_email] = personalized_content
+                                    
+                                    with st.spinner("Đang gửi email... Vui lòng đợi."):
+                                        from dotenv import load_dotenv
+                                        load_dotenv()
+                                        ket_qua_gui = gui_email(emails_to_send)
+                                    
+                                    st.subheader("Kết quả Gửi Email")
+                                    all_success = True
+                                    for email, trang_thai in ket_qua_gui.items():
+                                        if trang_thai == "Thành công":
+                                            st.success(f"{email}: {trang_thai}")
+                                        else:
+                                            st.error(f"{email}: {trang_thai}")
+                                            all_success = False
+                                    
+                                    if all_success:
+                                        st.balloons()
+                                    else:
+                                        st.warning("Một số email không gửi được. Vui lòng kiểm tra log lỗi.")
+                                    
+                                    # Log the manual email sending
+                                    luu_log(
+                                        ngay_kiem_tra=datetime.now().day,
+                                        gio_so_sanh="Manual",
+                                        danh_sach_di_muon=[],
+                                        danh_sach_vang=[],
+                                        ket_qua_gui=ket_qua_gui
+                                    )
+                except Exception as e:
+                    # Handle any exceptions that occur when sending manual emails
+                    st.error(f"Lỗi khi đọc danh sách người nhận: {str(e)}")
+        
+        # Add history tab
+        with tab3:
             st.subheader("Lịch sử Gửi Email")
             if st.button("🔄 Làm mới", key="refresh_history"):
                 pass  # The view_log_history function will be called anyway

@@ -1,0 +1,40 @@
+
+==================================================
+Thời gian ghi log: 2025-05-21 14:35:50
+Ngày kiểm tra: 21
+Giờ so sánh: Manual
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+- tagiahuy2605@gmail.com: Thành công
+
+Tổng kết: Thành công: 1, Thất bại: 0
+==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-21 16:11:47
+Ngày kiểm tra: 21
+Giờ so sánh: Manual
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+-  tagiahuy2605@gmail.com : Thành công
+
+Tổng kết: Thành công: 1, Thất bại: 0
+==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-21 16:14:18
+Ngày kiểm tra: 21
+Giờ so sánh: Manual
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+-  nguyntanh2k5@gmail.com: Thành công
+-  tagiahuy2605@gmail.com : Thành công
+
+Tổng kết: Thành công: 2, Thất bại: 0
+==================================================
