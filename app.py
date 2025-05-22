@@ -470,11 +470,22 @@ def main():
                         
                         # Select recipients
                         if 'email' in recipients_df.columns:
-                            selected_recipients = st.multiselect(
-                                "Chọn người nhận email:",
-                                options=recipients_df.index.tolist(),
-                                format_func=lambda x: f"{recipients_df.loc[x, 'ten']} ({recipients_df.loc[x, 'email']})")
-                            
+                            # Thêm checkbox "Chọn tất cả"
+                            select_all = st.checkbox("Chọn tất cả người nhận", key="select_all_manual_email")
+                            all_indices = recipients_df.index.tolist()
+                            if select_all:
+                                selected_recipients = st.multiselect(
+                                    "Chọn người nhận email:",
+                                    options=all_indices,
+                                    default=all_indices,
+                                    format_func=lambda x: f"{recipients_df.loc[x, 'ten']} ({recipients_df.loc[x, 'email']})"
+                                )
+                            else:
+                                selected_recipients = st.multiselect(
+                                    "Chọn người nhận email:",
+                                    options=all_indices,
+                                    format_func=lambda x: f"{recipients_df.loc[x, 'ten']} ({recipients_df.loc[x, 'email']})"
+                                )
                             if selected_recipients and template_content:
                                 if st.button("✉️ Gửi Email", key="send_manual_email"):
                                     emails_to_send = {}

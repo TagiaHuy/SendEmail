@@ -38,3 +38,47 @@ KẾT QUẢ GỬI EMAIL:
 
 Tổng kết: Thành công: 2, Thất bại: 0
 ==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-22 09:42:49
+Ngày kiểm tra: 21
+Giờ so sánh: 18:00
+
+DANH SÁCH VI PHẠM:
+
+Vắng mặt (28):
+- Admin
+- Bùi Cao Thành
+- Bùi Tiến Đạt
+- Dương Nguyên Thượng
+- Hoàng Minh Quân
+- Justin Elpidio Luu Dahilig
+- Lê Dương Tùng Anh
+- Lê Lan Hương
+- Nguyễn Hà Nam Khánh
+- Nguyễn Hữu Minh Khuê
+- Nguyễn Nông Quốc Hùng
+- Nguyễn Phúc Hải
+- Nguyễn Quốc Bình
+- Nguyễn Thị Minh Anh
+- Nguyễn Thị Thùy Liên
+- Nguyễn Tấn Phát
+- Nguyễn Đức Việt
+- Ngô Trần Bình Dương
+- Nhật Minh Quang
+- Phạm Hải Đăng
+- Phạm Thị Thanh Nhàn
+- Quách Tùng Anh
+- Vũ Ngọc Linh
+- Vũ Đình Anh Vũ
+- Đinh Nhật Thành
+- (Sign, fullname)
+- Full shift
+- Absent with tuition fee
+
+KẾT QUẢ GỬI EMAIL:
+- tagiahuy2605@gmail.com: Thành công
+-  buicaothanh8998@gmail.com: Thành công
+
+Tổng kết: Thành công: 2, Thất bại: 0
+==================================================
