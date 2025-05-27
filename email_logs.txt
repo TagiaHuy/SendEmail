@@ -82,3 +82,45 @@ KẾT QUẢ GỬI EMAIL:
 
 Tổng kết: Thành công: 2, Thất bại: 0
 ==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-27 08:11:51
+Ngày kiểm tra: 27
+Giờ so sánh: Manual
+Tiêu đề email: Thông báo vi phạm nội quy CLB Tiếng Anh
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+-  huysama55346@gmail.com : Thành công
+
+Tổng kết: Thành công: 1, Thất bại: 0
+==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-27 08:29:05
+Ngày kiểm tra: 27
+Giờ so sánh: Manual
+Tiêu đề email: Thông báo vi phạm nội quy CLB Tiếng Anh
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+- tagiahuy2605@gmail.com: Thành công
+
+Tổng kết: Thành công: 1, Thất bại: 0
+==================================================
+
+==================================================
+Thời gian ghi log: 2025-05-27 08:30:45
+Ngày kiểm tra: 27
+Giờ so sánh: Manual
+Tiêu đề email: Chúc mừng bạn đã đăng ký phỏng vấn thành công
+
+DANH SÁCH VI PHẠM:
+
+KẾT QUẢ GỬI EMAIL:
+- tagiahuy2605@gmail.com: Thành công
+
+Tổng kết: Thành công: 1, Thất bại: 0
+==================================================

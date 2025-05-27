@@ -25,7 +25,8 @@ try:
         VIOLATION_LATE,
         VIOLATION_ABSENT,
         FINE_LATE,
-        FINE_ABSENT
+        FINE_ABSENT,
+        EMAIL_SUBJECT
     )
     functions_loaded = True
 except ImportError as e:
@@ -363,12 +364,15 @@ def main():
                         st.markdown(f"**Tới:** {email_addr}")
                         st.markdown("---")
                 
+                # Thêm trường nhập tiêu đề email
+                tieu_de_email = st.text_input("Nhập tiêu đề email:", value=EMAIL_SUBJECT, key="auto_email_subject")
+                
                 if st.button("✉️ Gửi tất cả Email", key="send_email_button"):
                     with st.spinner("Đang gửi email... Vui lòng đợi."):
                         from dotenv import load_dotenv
                         load_dotenv()
                         
-                        ket_qua_gui = gui_email(emails_to_send)
+                        ket_qua_gui = gui_email(emails_to_send, tieu_de_email)
                     
                     st.subheader("Kết quả Gửi Email")
                     all_success = True
@@ -385,7 +389,8 @@ def main():
                         gio_so_sanh=gio.strftime('%H:%M'),
                         danh_sach_di_muon=st.session_state.processed_data["di_muon"],
                         danh_sach_vang=st.session_state.processed_data["vang_sau_loc"],
-                        ket_qua_gui=ket_qua_gui
+                        ket_qua_gui=ket_qua_gui,
+                        tieu_de=tieu_de_email
                     )
                     
                     if all_success:
@@ -487,6 +492,8 @@ def main():
                                     format_func=lambda x: f"{recipients_df.loc[x, 'ten']} ({recipients_df.loc[x, 'email']})"
                                 )
                             if selected_recipients and template_content:
+                                # Thêm trường nhập tiêu đề email
+                                tieu_de_email = st.text_input("Nhập tiêu đề email:", value=EMAIL_SUBJECT)
                                 if st.button("✉️ Gửi Email", key="send_manual_email"):
                                     emails_to_send = {}
                                     for idx in selected_recipients:
@@ -517,7 +524,7 @@ def main():
                                     with st.spinner("Đang gửi email... Vui lòng đợi."):
                                         from dotenv import load_dotenv
                                         load_dotenv()
-                                        ket_qua_gui = gui_email(emails_to_send)
+                                        ket_qua_gui = gui_email(emails_to_send, tieu_de_email)
                                     
                                     st.subheader("Kết quả Gửi Email")
                                     all_success = True
@@ -539,7 +546,8 @@ def main():
                                         gio_so_sanh="Manual",
                                         danh_sach_di_muon=[],
                                         danh_sach_vang=[],
-                                        ket_qua_gui=ket_qua_gui
+                                        ket_qua_gui=ket_qua_gui,
+                                        tieu_de=tieu_de_email
                                     )
                 except Exception as e:
                     # Handle any exceptions that occur when sending manual emails

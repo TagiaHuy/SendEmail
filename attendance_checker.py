@@ -262,12 +262,13 @@ def tao_noi_dung_email(
     return emails_to_send
 
 
-def gui_email(emails_data: Dict[str, str]) -> Dict[str, str]:
+def gui_email(emails_data: Dict[str, str], tieu_de: str = EMAIL_SUBJECT) -> Dict[str, str]:
     """
     Gửi email thông báo vi phạm tới danh sách người nhận.
 
     Args:
         emails_data: Dictionary với key là email người nhận, value là nội dung email.
+        tieu_de: Tiêu đề email (mặc định: EMAIL_SUBJECT).
 
     Returns:
         Dictionary với key là email, value là trạng thái gửi ("Thành công" hoặc "Lỗi: ...").
@@ -312,7 +313,7 @@ def gui_email(emails_data: Dict[str, str]) -> Dict[str, str]:
                 msg = MIMEMultipart()
                 msg['From'] = EMAIL_ADDRESS
                 msg['To'] = email_nhan
-                msg['Subject'] = EMAIL_SUBJECT
+                msg['Subject'] = tieu_de
 
                 # Đính kèm nội dung email với encoding utf-8
                 msg.attach(MIMEText(noi_dung, 'plain', 'utf-8'))
@@ -369,6 +370,7 @@ def luu_log(
     danh_sach_di_muon: List[str],
     danh_sach_vang: List[str],
     ket_qua_gui: Dict[str, str],
+    tieu_de: str = EMAIL_SUBJECT,
     ten_file_log: str = "email_logs.txt"
 ) -> None:
     """
@@ -392,7 +394,8 @@ def luu_log(
             f.write(f"\n{'='*50}\n")
             f.write(f"Thời gian ghi log: {thoi_gian_hien_tai}\n")
             f.write(f"Ngày kiểm tra: {ngay_kiem_tra}\n")
-            f.write(f"Giờ so sánh: {gio_so_sanh}\n\n")
+            f.write(f"Giờ so sánh: {gio_so_sanh}\n")
+            f.write(f"Tiêu đề email: {tieu_de}\n\n")
             
             f.write("DANH SÁCH VI PHẠM:\n")
             if danh_sach_di_muon:
@@ -430,6 +433,10 @@ def main():
     except ValueError:
        print("Ngày nhập không hợp lệ, sử dụng ngày mặc định.")
        ngay_can_kiem_tra = ngay_can_kiem_tra_default
+
+    # Nhập tiêu đề email
+    tieu_de_input = input(f"Nhập tiêu đề email (mặc định: {EMAIL_SUBJECT}): ")
+    tieu_de = tieu_de_input if tieu_de_input else EMAIL_SUBJECT
 
     gio_vao_so_sanh_default = "18:00"
     gio_vao_input = input(f"Nhập giờ vào làm chuẩn (HH:MM, mặc định: {gio_vao_so_sanh_default}): ")
@@ -486,7 +493,7 @@ def main():
 
     # Gửi email
     print("\n--- Bắt đầu gửi email ---")
-    ket_qua_gui = gui_email(emails_can_gui)
+    ket_qua_gui = gui_email(emails_can_gui, tieu_de)
 
     # In kết quả
     print("\n--- Kết quả gửi email ---")
@@ -502,7 +509,7 @@ def main():
 
     # Lưu log
     print("\n--- Lưu log ---")
-    luu_log(ngay_can_kiem_tra, gio_vao_so_sanh, danh_sach_di_muon, danh_sach_vang_sau_loc, ket_qua_gui)
+    luu_log(ngay_can_kiem_tra, gio_vao_so_sanh, danh_sach_di_muon, danh_sach_vang_sau_loc, ket_qua_gui, tieu_de)
 
 
 # Chạy hàm main khi script được thực thi trực tiếp
